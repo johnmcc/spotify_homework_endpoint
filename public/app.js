@@ -14,9 +14,9 @@ var getUrl = function(query){
 
 var processResults = function(){
   var responseString = this.responseText;
-  var myAlbums = JSON.parse(responseString).albums.items;
+  var albums = JSON.parse(responseString).albums.items;
 
-  var albumObjects = myAlbums.map(function(item){
+  var albumObjects = albums.map(function(item){
     var albumName = item.name;
     var artist = item.artists.map(function(artist){ return artist.name }).join(" / ");
     var albumCover = item.images[0].url;
@@ -38,8 +38,11 @@ var populateList = function(albums){
 };
 
 var handleBtnClick = function(){
-  var input = document.querySelector("#search-query");
-  var url = getUrl(input.value);
+  var value = document.querySelector("#search-query").value;
+  
+  if(!value) return alert("Gonnae enter a search term?");
+
+  var url = getUrl(value);
   makeRequest(url, processResults);
 };
 
