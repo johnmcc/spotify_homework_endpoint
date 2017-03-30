@@ -16,16 +16,13 @@ var processResults = function(){
   var responseString = this.responseText;
   var myAlbums = JSON.parse(responseString).albums.items;
 
-  var albumObjects = [];
-
-  myAlbums.forEach(function(item){
+  var albumObjects = myAlbums.map(function(item){
     var albumName = item.name;
     var artist = item.artists[0].name;
     var albumCover = item.images[0].url;
 
-    var album = new Album(albumName, artist, albumCover);
-    albumObjects.push(album);
-  });
+    return new Album(albumName, artist, albumCover);
+  }); 
 
   populateList(albumObjects);
 };
